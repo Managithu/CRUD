@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Exercice CRUD Simple</title>
+    <style>
+        body { font-family: sans-serif; margin: 40px; line-height: 1.6; }
+        .form-box { background: #f9f9f9; padding: 20px; border-radius: 8px; border: 1px solid #ddd; margin-bottom: 30px; }
+        input { margin-bottom: 10px; display: block; width: 100%; padding: 8px; }
+        button { cursor: pointer; padding: 10px 15px; border: none; border-radius: 4px; }
+        .btn-save { background-color: #28a745; color: white; }
+        .btn-delete { background-color: #dc3545; color: white; padding: 5px; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background-color: #eee; }
+    </style>
+</head>
+<body>
+
+    <div class="form-box">
+        <h2>Ajouter un étudiant</h2>
+        <label>Nom :</label>
+        <input type="text" id="nomInput">
+        
+        <label>E-mail :</label>
+        <input type="email" id="emailInput">
+        
+        <label>Identifiant :</label>
+        <input type="text" id="idInput">
+        
+        <button class="btn-save" onclick="ajouterProfesseur()">Enregistrer l'inscription</button>
+    </div>
+     <div class="form-box">
+        <h2>Ajouter un professeur</h2>
+        <label>Nom :</label>
+        <input type="text" id="nomInput">
+        
+        <label>E-mail :</label>
+        <input type="email" id="emailInput">
+        
+        <label>Identifiant :</label>
+        <input type="text" id="idInput">
+        
+        <button class="btn-save" onclick="ajouterProfesseur()">Enregistrer l'inscription</button>
+    </div>
+
+    <h2>Inscriptions Acquises</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Nom</th>
+                <th>E-mail</th>
+                <th>ID</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="maListe">
+            </tbody>
+    </table>
+
+    <script>
+        function ajouterEtudiant() {
+            // 1. Récupérer les éléments par leur ID
+            const nom = document.getElementById('nomInput');
+            const email = document.getElementById('emailInput');
+            const id = document.getElementById('idInput');
+            const table = document.getElementById('maListe');
+
+
+            // Vérifier que les champs ne sont pas vides
+            if(nom.value === "" || email.value === "") {
+                alert("Merci de remplir les champs !");
+                return;
+            }
+            
+
+
+
+            // 2. Créer une nouvelle ligne (tr)
+            const nouvelleLigne = document.createElement('tr');
+
+            // 3. Remplir la ligne avec le contenu HTML
+            // On utilise les "backticks" ` ` pour insérer les variables directement
+            nouvelleLigne.innerHTML = `
+                <td>${nom.value}</td>
+                <td>${email.value}</td>
+                <td>${id.value}</td>
+                <td><button class="btn-delete" onclick="supprimerLigne(this)">Supprimer</button></td>
+            `;
+
+            // 4. Ajouter la ligne au tableau
+            table.appendChild(nouvelleLigne);
+
+            // 5. Vider les champs du formulaire
+            nom.value = "";
+            email.value = "";
+            id.value = "";
+        }
+        function ajouterProfesseur() {
+            // 1. Récupérer les éléments par leur ID
+            const nom = document.getElementById('nomInput');
+            const email = document.getElementById('emailInput');
+            const id = document.getElementById('idInput');
+            const table = document.getElementById('maListe');
+
+             if(nom.value === "" || email.value === "") {
+                alert("Merci de remplir les champs !");
+                return;
+            }
+            // 2. Créer une nouvelle ligne (tr)
+            const nouvelleLigne = document.createElement('tr');
+            nouvelleLigne.innerHTML = `
+                <td>${nom.value}</td>
+                <td>${email.value}</td>
+                <td>${id.value}</td>
+                <td><button class="btn-delete" onclick="supprimerLigne(this)">Supprimer</button></td>
+            `;
+        }
+
+        function supprimerLigne(bouton) {
+            // "bouton" est l'élément cliqué
+            // parentElement de bouton = td
+            // parentElement de td = tr (la ligne entière)
+            const ligneASupprimer = bouton.parentElement.parentElement;
+            ligneASupprimer.remove();
+        }
+    </script>
+
+</body>
+</html>
